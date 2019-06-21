@@ -42,7 +42,7 @@ if($_SESSION['status'] !="login"){
       <?php
     $link = koneksi_db(); 
     $id = $_GET['id_buku'];
-        $sql = "SELECT * FROM buku WHERE id_buku='$id'"; 
+        $sql = "SELECT * FROM view_buku WHERE id_buku='$id'"; 
         $res = mysqli_query($link,$sql);
         $banyakrecord = mysqli_num_rows($res); 
         $i=0;
@@ -57,16 +57,6 @@ if($_SESSION['status'] !="login"){
                 <td width="20%">Id Buku</td>
                 <td width="1%">:</td>
                 <td><?php echo $data['id_buku']; ?></td>
-            </tr>
-            <tr>
-                <td>Id Kelas</td>
-                <td width="1%">:</td>
-                <td><?php echo $data['id_kelas']; ?></td>
-            </tr>
-            <tr>
-                <td>Id Jenis</td>
-                <td width="1%">:</td>
-                <td><?php echo $data['id_jenis']; ?></td>
             </tr>
             <tr>
                 <td>Judul</td>
@@ -84,35 +74,16 @@ if($_SESSION['status'] !="login"){
                 <td><?php echo $data['penerbit']; ?></td>
             </tr>
             <tr>
-                <td>Tahun Terbit</td>
+                <td>Nama Kelas</td>
                 <td width="1%">:</td>
-                <td><?php echo $data['th_terbit']; ?></td>
+                <td><?php echo $data['nama_kelas']; ?></td>
             </tr>
              <tr>
-                <td>Isbn</td>
+                <td>Nama Jenis</td>
                 <td width="1%">:</td>
-                <td><?php echo $data['isbn']; ?></td>
+                <td><?php echo $data['nama_jenis']; ?></td>
             </tr>
-             <tr>
-                <td>Jumlah Halaman</td>
-                <td width="1%">:</td>
-                <td><?php echo $data['jml_hal']; ?></td>
-            </tr>
-             <tr>
-                <td>Harga</td>
-                <td width="1%">:</td>
-                <td><?php echo $data['harga']; ?></td>
-            </tr>
-             <tr>
-                <td>Id Lokasi</td>
-                <td width="1%">:</td>
-                <td><?php echo $data['id_lokasi']; ?></td>
-            </tr>
-             <tr>
-                <td>Tanggal Input</td>
-                <td width="1%">:</td>
-                <td><?php echo $data['tgl_input']; ?></td>
-            </tr>
+           
           </table>
           
           <?php

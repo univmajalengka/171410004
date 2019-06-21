@@ -42,7 +42,7 @@ if($_SESSION['status'] !="login"){
           <a href="tambah_buku.php" class="tdata">Tambah Data</a>
       <?php
     $link = koneksi_db(); 
-        $sql = "SELECT * FROM buku"; 
+        $sql = "SELECT * FROM view_buku"; 
         $res = mysqli_query($link,$sql);
         $banyakrecord = mysqli_num_rows($res); 
         if($banyakrecord > 0){
@@ -55,17 +55,11 @@ if($_SESSION['status'] !="login"){
               </tr> 
               <tr>
                 <td>Id Buku</td>
-                <td>Id Kelas</td>
-                <td>Id Jenis</td>
                 <td>Judul</td>
                 <td>Pengarang</td>
                 <td>Penerbit</td>
-                <td>Tahun Terbit</td>
-                <td>ISBN</td>
-                <td>Jumlah Halaman</td>
-                <td>Harga</td>
-                <td>Id Lokasi</td>
-                <td>Tanggal Input</td>
+                <td>Nama Kelas</td>
+                <td>Nama Jenis</td>
                 <td colspan="7">Action</td>
               </tr>
               <?php
@@ -78,12 +72,6 @@ if($_SESSION['status'] !="login"){
                   <?php echo $data['id_buku'];?>
                 </td>
                 <td>
-                  <?php echo $data['id_kelas'];?>
-                </td>
-                <td>
-                  <?php echo $data['id_jenis'];?>
-                </td>
-                <td>
                   <?php echo $data['judul'];?>
                 </td>
                 <td>
@@ -93,23 +81,12 @@ if($_SESSION['status'] !="login"){
                   <?php echo $data['penerbit'];?>
                 </td>
                 <td>
-                  <?php echo $data['th_terbit'];?>
+                  <?php echo $data['nama_kelas'];?>
                 </td>
                 <td>
-                  <?php echo $data['isbn'];?>
+                  <?php echo $data['nama_jenis'];?>
                 </td>
-                 <td>
-                  <?php echo $data['jml_hal'];?>
-                </td>
-                 <td>
-                  <?php echo $data['harga'];?>
-                </td>
-                 <td>
-                  <?php echo $data['id_lokasi'];?>
-                </td>
-                 <td>
-                  <?php echo $data['tgl_input'];?>
-                </td>
+                
 
                  
                 <td width="70px">
