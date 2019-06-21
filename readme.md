@@ -1,7 +1,9 @@
 # 171410004  
-**crisda purnama**  
+**Crisda Purnama**  
+:email: crisdapurnama93@gmail.com
   
   
-isi folder:  
--SBDL  
--perpus
+Isi Folder :  
+- SBDL
+  - perpus
+  - Screenshot Program
