@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 11 Mei 2019 pada 09.07
+-- Generation Time: 30 Jun 2019 pada 16.56
 -- Versi Server: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -158,14 +158,14 @@ INSERT INTO `config` (`id`, `nama`, `alamat`, `pimpinan`, `pimpinan_nip`, `petug
 
 CREATE TABLE IF NOT EXISTS `jenis` (
 `id_jenis` int(5) NOT NULL,
-  `nama` varchar(20) NOT NULL
+  `nama_jenis` varchar(20) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `jenis`
 --
 
-INSERT INTO `jenis` (`id_jenis`, `nama`) VALUES
+INSERT INTO `jenis` (`id_jenis`, `nama_jenis`) VALUES
 (11, 'buku bacaan'),
 (22, 'bacaan non fiksi'),
 (33, 'bacaan fiksi'),
@@ -185,14 +185,14 @@ INSERT INTO `jenis` (`id_jenis`, `nama`) VALUES
 
 CREATE TABLE IF NOT EXISTS `kelas` (
 `id_kelas` int(5) NOT NULL,
-  `nama` varchar(20) NOT NULL
+  `nama_kelas` varchar(20) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `kelas`
 --
 
-INSERT INTO `kelas` (`id_kelas`, `nama`) VALUES
+INSERT INTO `kelas` (`id_kelas`, `nama_kelas`) VALUES
 (1, 'kelas_1'),
 (2, 'kelas_2'),
 (3, 'kelas_3'),
@@ -305,7 +305,7 @@ CREATE TABLE IF NOT EXISTS `transaksi` (
   `stat` varchar(50) NOT NULL,
   `telat` int(2) NOT NULL,
   `denda` decimal(10,2) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=997 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=924 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `transaksi`
@@ -320,8 +320,7 @@ INSERT INTO `transaksi` (`id`, `id_buku`, `id_anggota`, `tgl_pinjaman`, `tgl_kem
 (685, 666, 675, '2019-05-07', '2019-03-08', 'pinjam', 3, '20.00'),
 (879, 777, 786, '2019-04-08', '2019-05-05', 'pinjam', 3, '20.00'),
 (888, 888, 884, '2019-05-31', '2019-05-29', 'pinjam', 3, '20.00'),
-(923, 999, 931, '2019-03-01', '2019-03-31', 'pinjam', 2, '20.00'),
-(996, 1011, 8448, '2019-01-01', '2019-01-31', 'pinjam', 3, '20.00');
+(923, 999, 931, '2019-03-01', '2019-03-31', 'pinjam', 2, '20.00');
 
 -- --------------------------------------------------------
 
@@ -352,6 +351,28 @@ INSERT INTO `user` (`id_user`, `username`, `password`, `level`) VALUES
 (181, 'yasir71', '123456789', ''),
 (191, 'demasyur12', 'yur1234', ''),
 (192, 'admin', 'admin', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `view_buku`
+--
+CREATE TABLE IF NOT EXISTS `view_buku` (
+`id_buku` int(6)
+,`judul` varchar(250)
+,`pengarang` varchar(250)
+,`penerbit` varchar(250)
+,`nama_kelas` varchar(20)
+,`nama_jenis` varchar(20)
+);
+-- --------------------------------------------------------
+
+--
+-- Struktur untuk view `view_buku`
+--
+DROP TABLE IF EXISTS `view_buku`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_buku` AS select `a`.`id_buku` AS `id_buku`,`a`.`judul` AS `judul`,`a`.`pengarang` AS `pengarang`,`a`.`penerbit` AS `penerbit`,`b`.`nama_kelas` AS `nama_kelas`,`c`.`nama_jenis` AS `nama_jenis` from ((`buku` `a` join `kelas` `b` on((`b`.`id_kelas` = `a`.`id_kelas`))) join `jenis` `c` on((`c`.`id_jenis` = `c`.`id_jenis`)));
 
 --
 -- Indexes for dumped tables
@@ -471,12 +492,31 @@ MODIFY `id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=997;
 -- AUTO_INCREMENT for table `transaksi`
 --
 ALTER TABLE `transaksi`
-MODIFY `id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=997;
+MODIFY `id` int(6) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=924;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
 MODIFY `id_user` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=193;
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `buku`
+--
+ALTER TABLE `buku`
+ADD CONSTRAINT `buku_ibfk_1` FOREIGN KEY (`id_kelas`) REFERENCES `kelas` (`id_kelas`),
+ADD CONSTRAINT `buku_ibfk_2` FOREIGN KEY (`id_lokasi`) REFERENCES `lokasi` (`id_lokasi`),
+ADD CONSTRAINT `buku_ibfk_3` FOREIGN KEY (`id_jenis`) REFERENCES `jenis` (`id_jenis`);
+
+--
+-- Ketidakleluasaan untuk tabel `transaksi`
+--
+ALTER TABLE `transaksi`
+ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_buku`) REFERENCES `buku` (`id_buku`),
+ADD CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`id_anggota`) REFERENCES `anggota` (`id_anggota`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
